@@ -1,0 +1,9 @@
+<div class="quote-box">
+  <ng-container *ngIf="loading; else loaded">
+    <p class="loading">Loading quote...</p>
+  </ng-container>
+
+  <ng-template #loaded>
+    <p class="quote">{{ quote }}</p>
+  </ng-template>
+</div>

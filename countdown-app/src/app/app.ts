@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
-import { CountdownComponent } from './components/CountDown/countdown.component';
+
+import { CountdownComponent } from './components/countdown.component';
 
 @Component({
   selector: 'app-root',
