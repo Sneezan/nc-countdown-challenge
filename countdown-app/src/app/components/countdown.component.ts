@@ -1,24 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { QuoteComponent } from './QuoteOfTheDay/quote.component';
 
 @Component({
   selector: 'app-countdown',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, QuoteComponent],
   templateUrl: './countdown.component.html',
   styleUrls: ['./countdown.component.css'],
 })
 export class CountdownComponent implements OnInit, OnDestroy {
   title: string = '';
-  date: string = ''; // bind to date input
+  date: string = '';
   countdown: string = '';
   headerText: string = '';
   detailText: string = '';
   private intervalId: any;
 
   ngOnInit(): void {
-    // Ensure a full reset on page load/refresh
     this.title = '';
     this.date = '';
     this.countdown = '';

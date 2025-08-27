@@ -1,0 +1,15 @@
+.quote-box {
+  margin: 1rem auto;
+  max-width: 600px;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.loading {
+  font-style: italic;
+  color: #d43232;
+}
+
+.quote {
+  font-size: 1.4rem;
+}

@@ -1,0 +1,27 @@
+<div class="page-wrapper">
+  <div *ngIf="headerText || detailText" class="header-wrapper">
+    <div *ngIf="headerText" class="header">{{ headerText }}</div>
+    <div *ngIf="detailText" class="detail">{{ detailText }}</div>
+  </div>
+
+  <app-quote></app-quote>
+
+  <div class="fieldsets-wrapper">
+    <div class="fieldsets-container">
+      <fieldset class="input-fieldset">
+        <legend>Title</legend>
+        <input
+          type="text"
+          [(ngModel)]="title"
+          (input)="startCountdown()"
+          placeholder="Event name"
+          autocomplete="off"
+        />
+      </fieldset>
+      <fieldset class="input-fieldset">
+        <legend>Date</legend>
+        <input type="date" [(ngModel)]="date" (change)="startCountdown()" autocomplete="off" />
+      </fieldset>
+    </div>
+  </div>
+</div>
