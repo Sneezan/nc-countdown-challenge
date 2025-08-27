@@ -1,0 +1,21 @@
+<div class="p-4">
+  <div *ngIf="headerText || detailText" class="mt-4">
+    <h1>{{ headerText }}</h1>
+    <div *ngIf="detailText">{{ detailText }}</div>
+  </div>
+  <div>
+    <label>Title: </label>
+    <input
+      type="text"
+      [(ngModel)]="title"
+      (input)="startCountdown()"
+      placeholder="Event name"
+      autocomplete="off"
+    />
+  </div>
+
+  <div>
+    <label>Date: </label>
+    <input type="date" [(ngModel)]="date" (change)="startCountdown()" autocomplete="off" />
+  </div>
+</div>
