@@ -1,27 +1,42 @@
+<div *ngIf="showQuote" class="logo-wrapper">
+  <img src="/NaturalCyclesLogo.png" alt="Natural CyclesLogo" width="150" />
+</div>
+
 <div class="page-wrapper">
   <div *ngIf="headerText || detailText" class="header-wrapper">
-    <div *ngIf="headerText" class="header">{{ headerText }}</div>
-    <div *ngIf="detailText" class="detail">{{ detailText }}</div>
+    <h1 *ngIf="headerText" class="header" textFit [tfMin]="12" [tfMax]="200">{{ headerText }}</h1>
+    <div *ngIf="detailText" textFit [tfMin]="10" [tfMax]="160">{{ detailText }}</div>
   </div>
 
-  <app-quote></app-quote>
+  <ng-container *ngIf="showQuote">
+    <app-quote></app-quote>
+  </ng-container>
 
-  <div class="fieldsets-wrapper">
+  <form class="countdown-form">
     <div class="fieldsets-container">
-      <fieldset class="input-fieldset">
-        <legend>Title</legend>
+      <div class="input-group">
+        <label for="title-input">Title</label>
         <input
+          id="title-input"
+          name="title"
           type="text"
           [(ngModel)]="title"
           (input)="startCountdown()"
           placeholder="Event name"
           autocomplete="off"
         />
-      </fieldset>
-      <fieldset class="input-fieldset">
-        <legend>Date</legend>
-        <input type="date" [(ngModel)]="date" (change)="startCountdown()" autocomplete="off" />
-      </fieldset>
+      </div>
+      <div class="input-group">
+        <label for="date-input">Date</label>
+        <input
+          id="date-input"
+          name="date"
+          type="date"
+          [(ngModel)]="date"
+          (change)="startCountdown()"
+          autocomplete="off"
+        />
+      </div>
     </div>
-  </div>
+  </form>
 </div>

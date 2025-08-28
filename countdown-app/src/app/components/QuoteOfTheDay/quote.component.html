@@ -1,9 +1,8 @@
-<div class="quote-box">
-  <ng-container *ngIf="loading; else loaded">
-    <p class="loading">Loading quote...</p>
-  </ng-container>
-
-  <ng-template #loaded>
-    <p class="quote">{{ quote }}</p>
-  </ng-template>
+<div class="quote-container">
+  <div *ngIf="loading" class="loading">
+    <img src="/NClogo.png" alt="NC Logo" class="loading-logo" />
+  </div>
+  <div *ngIf="!loading && quote" class="quote">
+    <p class="quote-text">{{ quote }}</p>
+  </div>
 </div>

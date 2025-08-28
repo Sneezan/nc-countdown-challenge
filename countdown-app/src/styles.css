@@ -1,12 +1,43 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global Styles */
+
+@font-face {
+  font-family: 'Open Sauce One';
+  src: url('assets/fonts/OpenSauceOneRegular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Open Sauce One';
+  src: url('assets/fonts/OpenSauceOneBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+
 :root {
   --primary-bg: #f5f3f3;
   --brand-color: #72035d;
-  --font-family: 'Open Sauce One', Arial, sans-serif;
+  --secondary-gray: #757575;
+  --primpary-black: #000000;
+  --font-family: 'Open Sauce One';
 }
 
 html,
 body {
   font-family: var(--font-family);
   background-color: var(--primary-bg);
+  padding: 4px;
+}
+
+input::placeholder,
+textarea::placeholder,
+input {
+  width: 278px;
+  height: 46px;
+  color: var(--primary-black);
+  background-color: var(--primary-bg);
+  border: none;
+  outline: none;
+  font-size: 14px;
+  flex: 1;
+  font-family: inherit;
 }
