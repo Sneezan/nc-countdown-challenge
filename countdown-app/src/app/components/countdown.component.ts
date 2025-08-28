@@ -1,10 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { QuoteComponent } from './QuoteOfTheDay/quote.component';
 import { TextFitDirective } from '../directives/text-fit.directive';
-import { isPlatformBrowser } from '@angular/common';
-import { PLATFORM_ID, inject } from '@angular/core';
+import { calculateCountdown } from '../utils/countdown.utils';
+import { getUrlParams, updateUrlParams } from '../utils/url.utils';
+import { isBrowserPlatform, addResizeListener, removeResizeListener } from '../utils/browser.utils';
+import { shouldShowQuote } from '../utils/media.utils';
+import { isValidTitle } from '../utils/validation.utils';
 
 @Component({
   selector: 'app-countdown',
@@ -20,103 +23,88 @@ export class CountdownComponent implements OnInit, OnDestroy {
   headerText: string = '';
   detailText: string = '';
   private intervalId: any;
-  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  private readonly isBrowser = isBrowserPlatform();
 
   showQuote: boolean = false;
   private resizeHandler = () => this.updateShowQuote();
 
+  // Computed property to control detail text visibility
+  get detailTextClass(): string {
+    return this.detailText ? 'detail' : 'detail hidden';
+  }
+
   ngOnInit(): void {
-    // Restore from URL params (browser only)
-    if (this.isBrowser && typeof window !== 'undefined') {
-      const url = new URL(window.location.href);
-      const qpTitle = url.searchParams.get('title');
-      const qpDate = url.searchParams.get('date');
-      this.title = qpTitle ?? '';
-      this.date = qpDate ?? '';
+    // Restore from URL params
+    if (this.isBrowser) {
+      const params = getUrlParams();
+      this.title = params.title;
+      this.date = params.date;
     }
 
-    this.countdown = '';
-    this.headerText = '';
-    this.detailText = '';
-    if (this.intervalId) clearInterval(this.intervalId);
+    this.resetCountdown();
 
-    // Start countdown if we have a title and date
-    if (this.title && this.date) {
+    // Start countdown if we have a date
+    if (this.date) {
       this.startCountdown();
     }
 
-    // Determine whether to show quote (<= 430px)
+    // Determine whether to show quote
     this.updateShowQuote();
-    if (this.isBrowser && typeof window !== 'undefined') {
-      window.addEventListener('resize', this.resizeHandler);
+    if (this.isBrowser) {
+      addResizeListener(this.resizeHandler);
     }
   }
 
   ngOnDestroy(): void {
     if (this.intervalId) clearInterval(this.intervalId);
-    if (this.isBrowser && typeof window !== 'undefined') {
-      window.removeEventListener('resize', this.resizeHandler);
+    if (this.isBrowser) {
+      removeResizeListener(this.resizeHandler);
     }
   }
 
   private updateShowQuote(): void {
-    if (!(this.isBrowser && typeof window !== 'undefined')) {
-      this.showQuote = false;
-      return;
-    }
-    this.showQuote = window.matchMedia('(max-width: 430px)').matches;
+    this.showQuote = shouldShowQuote();
   }
 
-  private updateUrlParams(): void {
-    if (!(this.isBrowser && typeof window !== 'undefined')) return;
-    const url = new URL(window.location.href);
-    if (this.title) url.searchParams.set('title', this.title);
-    else url.searchParams.delete('title');
-    if (this.date) url.searchParams.set('date', this.date);
-    else url.searchParams.delete('date');
-    window.history.replaceState({}, '', url.toString());
+  private resetCountdown(): void {
+    this.countdown = '';
+    this.headerText = '';
+    this.detailText = '';
+    if (this.intervalId) clearInterval(this.intervalId);
   }
 
   startCountdown(): void {
     if (this.intervalId) clearInterval(this.intervalId);
 
     // If title is cleared, reset the countdown
-    if (!this.title || !this.title.trim()) {
+    if (!isValidTitle(this.title)) {
       this.headerText = '';
       this.detailText = '';
-      this.updateUrlParams();
+      updateUrlParams(this.title, this.date);
       return;
     }
 
-    // Persist to URL (browser only)
-    this.updateUrlParams();
+    updateUrlParams(this.title, this.date);
 
     this.intervalId = setInterval(() => {
       if (!this.date) {
-        this.countdown = '';
-        this.headerText = '';
-        this.detailText = '';
+        this.resetCountdown();
         return;
       }
 
-      const eventDate = new Date(this.date).getTime();
-      const now = new Date().getTime();
-      const distance = eventDate - now;
+      const result = calculateCountdown(this.date);
 
-      if (distance <= 0) {
-        this.headerText = `${this.title} has arrived! 🎉`;
+      if (result.isExpired || result.isInThePast) {
+        this.headerText = result.isExpired
+          ? `${this.title} has arrived! 🎉`
+          : `${this.title} is in the past! 😅`;
         this.detailText = '';
         clearInterval(this.intervalId);
         return;
       }
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
       this.headerText = `Time to ${this.title}`;
-      this.detailText = `${days} days, ${hours} h, ${minutes}m, ${seconds}s`;
+      this.detailText = `${result.days} days, ${result.hours} h, ${result.minutes}m, ${result.seconds}s`;
     }, 1000);
   }
 }

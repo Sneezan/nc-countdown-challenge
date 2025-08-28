@@ -5,7 +5,7 @@
 <div class="page-wrapper">
   <div *ngIf="headerText || detailText" class="header-wrapper">
     <h1 *ngIf="headerText" class="header" textFit [tfMin]="12" [tfMax]="200">{{ headerText }}</h1>
-    <div *ngIf="detailText" textFit [tfMin]="10" [tfMax]="160">{{ detailText }}</div>
+    <div [class]="detailTextClass" textFit [tfMin]="10" [tfMax]="160">{{ detailText }}</div>
   </div>
 
   <ng-container *ngIf="showQuote">

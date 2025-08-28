@@ -7,7 +7,6 @@ import { CountdownComponent } from './components/countdown.component';
   standalone: true,
   imports: [CountdownComponent],
   templateUrl: './app.html',
-  styleUrl: './app.css',
 })
 export class App {
   protected readonly title = signal('countdown');
