@@ -28,10 +28,6 @@ export class CountdownComponent implements OnInit, OnDestroy {
   showQuote: boolean = false;
   private resizeHandler = () => this.updateShowQuote();
 
-  // Computed property to control detail text visibility
-  get detailTextClass(): string {
-    return this.detailText ? 'detail' : 'detail hidden';
-  }
 
   ngOnInit(): void {
     // Restore from URL params
@@ -43,8 +39,7 @@ export class CountdownComponent implements OnInit, OnDestroy {
 
     this.resetCountdown();
 
-    // Start countdown if we have a date
-    if (this.date) {
+    if (this.title && this.date) {
       this.startCountdown();
     }
 
@@ -104,7 +99,7 @@ export class CountdownComponent implements OnInit, OnDestroy {
       }
 
       this.headerText = `Time to ${this.title}`;
-      this.detailText = `${result.days} days, ${result.hours} h, ${result.minutes}m, ${result.seconds}s`;
+      this.detailText = `${result.days} days, ${result.hours}h, ${result.minutes}m, ${result.seconds}s`;
     }, 1000);
   }
 }
