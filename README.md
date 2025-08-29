@@ -1,5 +1,5 @@
 # Natural Cycles Challenge - Countdown app 
-A responsive countdown application built with Angular and TypeScript. The app allows users to set an event name and end date, then displays a live countdown timer with auto-resizing text that always fits the screen width. It also fetches and displays a random "Quote of the Day" from a public API on each page load.
+A responsive countdown application built with Angular and TypeScript. The app allows users to set an event name and end date, then displays a live countdown timer with auto-resizing text that always fits the screen width. It also fetches and displays a random "Quote of the Day" from a public API.
 
 ## Features
 - Define an event name and end date
@@ -27,9 +27,11 @@ A responsive countdown application built with Angular and TypeScript. The app al
 #### Further iteration 
 May include additions such as allowing users to set multiple events, keep track of past events, pause/resume events as well as notifications or alerts when the event expires. Further more it would be nice with further design work and a dark/light mode toggle.   
 
-## Watch it live
+## Watch it live 🤪
 https://ceciliaohrn-naturalcycles.netlify.app/
 
+<img width="291" height="639" alt="Screenshot 2025-08-29 at 09 01 05 (2)" src="https://github.com/user-attachments/assets/0418104a-71eb-41b2-b090-afad93508d53" />
+<img width="431" height="385" alt="Screenshot 2025-08-29 at 09 01 23 (2)" src="https://github.com/user-attachments/assets/e791ed1a-6a57-491a-a49c-72dace3cd39f" />
 
 
 ## Running the project
