@@ -30,10 +30,6 @@ May include additions such as allowing users to set multiple events, keep track 
 ## Watch it live 🤪
 https://ceciliaohrn-naturalcycles.netlify.app/
 
-<img width="291" height="639" alt="Screenshot 2025-08-29 at 09 01 05 (2)" src="https://github.com/user-attachments/assets/0418104a-71eb-41b2-b090-afad93508d53" />
-<img width="431" height="385" alt="Screenshot 2025-08-29 at 09 01 23 (2)" src="https://github.com/user-attachments/assets/e791ed1a-6a57-491a-a49c-72dace3cd39f" />
-
-
 ## Running the project
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.0.
 
